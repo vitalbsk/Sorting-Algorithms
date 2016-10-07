@@ -28,6 +28,14 @@ namespace ConsoleApplication
             Console.Write("Result of Selection Sort:");
             for(int i = 0; i < array.Length; i++){
                 Console.Write(array[i] + " ");
+            }
+            Console.WriteLine();        
+
+            //Merge Sort
+            SortArray<int>.MergeSort(array);
+            Console.Write("Result of Merge Sort:");
+            for(int i = 0; i < array.Length; i++){
+                Console.Write(array[i] + " ");
             }        
         }
     }

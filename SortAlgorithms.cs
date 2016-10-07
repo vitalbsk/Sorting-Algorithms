@@ -109,24 +109,65 @@ public static class SortArray<T>  where T: IComparable
             throw new ArgumentNullException(nameof(array));
         }
 
-        int middleIndex = array.Length % 2;
-       // T[] left = Array.Copy()
-      //  MergeSort(left);
-      //  MergeSort(right);
-      //  MergeSort(left, right)
+        if (array.Length <= 1)
+        {
+            return;
+        }
+
+        int middleIndex = array.Length / 2;
+        T[] left = new T[middleIndex];
+        T[] right = new T[array.Length - middleIndex];
+        Array.Copy(array, 0, left, 0, middleIndex);
+        Array.Copy(array, middleIndex, right, 0, array.Length - middleIndex);
+        MergeSort(left);
+        MergeSort(right);
+        Merge(array, left, right);
     }
 
-    private static void Merge(T[] array){
-       // int indexFrom = satrtIndex;
-        //for(int i = satrtIndex + 1; i < array.Length; i++){
-         //   if(array[indexFrom].CompareTo(array[i]) > 0)
-        //    {
-       //         indexFrom = i;
-       //     }
-       // }
-       // return indexFrom;
-        
+    private static void Merge(T[] items, T[] left, T[] right)
+    {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int targetIndex = 0;
+    
+        int remaining = left.Length + right.Length;
+    
+        while(remaining > 0)
+        {
+            if (leftIndex >= left.Length)
+            {
+                items[targetIndex] = right[rightIndex++];
+            }
+            else if (rightIndex >= right.Length)
+            {
+                items[targetIndex] = left[leftIndex++];
+            }
+            else if (left[leftIndex].CompareTo(right[rightIndex]) < 0)
+            {
+                items[targetIndex] = left[leftIndex++];
+            }
+            else
+            {
+                items[targetIndex] = right[rightIndex++];
+            }
+    
+            targetIndex++;
+            remaining--;
+        }
     }
+    #endregion
+
+     #region QuickSort
+    //Complexity	Best Case	Average Case	Worst Case
+    //Time	        O(n log n)	O(n log n)	    O(n2)
+    //Space	           O(1)	       O(1)	           O(1)
+    public static void QuickSort(T[] array){
+        if(array == null){
+            throw new ArgumentNullException(nameof(array));
+        }
+
+    }
+
     #endregion
 
     private static void Swap(T[] array, int left, int right)
